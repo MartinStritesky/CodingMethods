@@ -27,7 +27,7 @@ struct Node {
 };
 
 //!  Initial method to calculate average information quantity and information per symbol.
-void setUpAlphabet(SymbolProb alp[],int size, double avgInfoQty, double infoQty[]);
+void setUpAlphabet(SymbolProb alp[],int size, double *avgInfoQty);
 
 //!  Method sorting array of SymbolProb by probability in descending order.
 void sortDesc(SymbolProb alp[], int size);
@@ -39,10 +39,10 @@ void sortAsc(SymbolProb alp[], int size);
 void sortBack (SymbolProb alp[], int size);
 
 //! Method generating binary code words using Shannon-Fano algorithm.
-void ShannonFan(SymbolProb alp[], int size);
+void ShannonFan(SymbolProb alp[], int size, double *avgWordLength);
 
 //! Method generating binary code words using HUffman´s algorithm.
-void Huffman(SymbolProb alp[], int size);
+void Huffman(SymbolProb alp[], int size, double *avgWordLength);
 
 //! Recursive function inside the ShannonFan method dividing each division further into two halves with simillar probability sums.
 std::function<void(int, int, double)> divideProb(int start, int end, double probSum);

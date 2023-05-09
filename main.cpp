@@ -10,58 +10,65 @@
 
 
 using namespace std;
+SymbolProb alp[10] = {
+    {'A', 0.10},
+    {'B', 0.08},
+    {'C', 0.06},
+    {'D', 0.03},
+    {'E', 0.15},
+    {'F', 0.12},
+    {'G', 0.04},
+    {'H', 0.17},
+    {'I', 0.07},
+    {'J', 0.18}
+};
+
+double avgWordLengthSF = 0;  // Average length of binary code word from Shannon Fano method.
+double avgWordLengthHuff = 0; // Average length of binary code word from Huffman method.
+double entrophy = 0;  // Enthrophy of the code.
+double avgInfoQty = 0;  // Average quantity of information of the alphabet.
 
 int main(int argc, char *argv[])
 {
-
-    double avgWordLength = 0;  // Average length of binary code word from Shannon Fano method.
-    double avgWordLengthHuff = 0; // Average length of binary code word from Huffman method.
-    double entrophy = 0;  // Enthrophy of the code.
-    double avgInfoQty=0;  // Average quantity of information of the alphabet.
-    double infoQty[10];     // Information quantity of particular symbol.
-
     QApplication a(argc, argv);   // Initialization of the application.
 
-    // Initialization of struct array for ShannonFano method
-    SymbolProb alpShFan[10] = {
-                               {'A', 0.10, "", ""},
-                               {'B', 0.08, "", ""},
-                               {'C', 0.06, "", ""},
-                               {'D', 0.03, "", ""},
-                               {'E', 0.15, "", ""},
-                               {'F', 0.12, "", ""},
-                               {'G', 0.04, "", ""},
-                               {'H', 0.17, "", ""},
-                               {'I', 0.07, "", ""},
-                               {'J', 0.18, "", ""},
-                               };
-    // Initialization of second struct array for Huffmanns method and copying symbol and probability from the first struct array
-    SymbolProb alpHuff[10];
-    for(int i = 0; i< 10; i++){
-        alpHuff[i].prob = alpShFan[i].prob;
-        alpHuff[i].symbol = alpShFan[i].symbol;
-    }
 
-    setUpAlphabet(alpShFan, 10, avgInfoQty,infoQty);
-    ShannonFan(alpShFan, 10);
-    Huffman(alpHuff, 10);
+    Widget w ; // Initialization of new QWidget object
 
-    // Calculating entrophy and average word lengths for Huffman and ShannonFano code words
-    for (int i = 0; i< 10; i++){
-        avgWordLengthHuff += alpHuff[i].code.length() * alpHuff[i].prob;
-        avgWordLength += alpShFan[i].code.length() * alpShFan[i].prob;
-        entrophy += abs(alpShFan[i].prob * log2(alpShFan[i].prob));
-    }
+    encode(alp, 10, &avgInfoQty, &avgWordLengthSF, &avgWordLengthHuff, &entrophy);
 
-    secureEven(alpHuff, 10);
-    secureEven(alpShFan, 10);
 
-    Widget w; // Initialization of new QWidget object
-
-    w.addAlphabet(alpShFan,alpHuff, 10, entrophy, avgWordLength, avgWordLengthHuff, avgInfoQty, infoQty);  // sending all information to be displayed in QWidget
-    w.update(); // updating Widget
+    w.addAlphabet(alp,10, &entrophy, &avgWordLengthSF, &avgWordLengthHuff, &avgInfoQty);  // sending all information to be displayed in QWidget
     w.show();   // showing the widget
 
     return a.exec();
 }
 
+void encode(SymbolProb alp[], int size, double *avgInfoQty, double *avgWordLengthSF, double *avgWordLengthHuff, double *entrophy){
+
+    for (int i = 0; i< size; i++){
+        *entrophy = *entrophy + abs(alp[i].prob * log2(alp[i].prob));
+    }
+
+    setUpAlphabet(alp, size, avgInfoQty);
+    ShannonFan(alp, size, avgWordLengthSF);
+    Huffman(alp, size, avgWordLengthHuff);
+    secureEven(alp, size);
+
+}
+
+void changeProb(double newProb[], Widget *w){
+
+    for (int i = 0; i < 10; i++){
+        alp[i].prob = newProb[i];
+        cout << alp[i].prob<< endl;
+    }
+
+    encode(alp, 10, &avgInfoQty, &avgWordLengthSF, &avgWordLengthHuff, &entrophy);
+
+    w->addAlphabet(alp,10, &entrophy, &avgWordLengthSF, &avgWordLengthHuff, &avgInfoQty);
+    w->repaint();
+    w->update();
+    w->show();
+
+}

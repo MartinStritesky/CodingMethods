@@ -9,6 +9,7 @@
 
 
 using namespace std;
+
 /*!
  * \brief setUpAlphabet Initial method to calculate average information quantity and information per symbol.
  * \param alp Struct representing the symbol array 10 long.
@@ -16,16 +17,15 @@ using namespace std;
  * \param avgInfoQty  A number calculated as sum of p(i) * log2(p(i)) through the array.
  * \param infoQty  A number calculated as - log2(p(i)) for particular symbol.
  */
-void setUpAlphabet(SymbolProb alp[], int size, double avgInfoQty, double infoQty[]){
-
+void setUpAlphabet(SymbolProb alp[], int size, double *avgInfoQty){
     double soucetProb;   // number used to verify that sum of probabilities is 100%
     soucetProb = 0;
-    avgInfoQty = 0;
+    //avgInfoQty = 0;
 
     for (int i = 0; i < size; i++){
         soucetProb += alp[i].prob;
-        avgInfoQty += alp[i].prob * log2(1/alp[i].prob);  // Calculation of average  information quantity of the alphabet.
-        infoQty[i] = - log2(alp[i].prob);  // Calculation of information quantity per symbol.
+        *avgInfoQty += alp[i].prob * log2(1/alp[i].prob);  // Calculation of average  information quantity of the alphabet.
+        alp[i].infoQty = - log2(alp[i].prob);  // Calculation of information quantity per symbol.
     }
 
     if (round(10 * soucetProb) != 10.0){
@@ -94,32 +94,30 @@ void sortBack (SymbolProb alp[], int size){
             if (alp[j].symbol > alp[j+1].symbol){
                 tmpChar = alp[j].symbol;
                 tmpProb = alp[j].prob;
-                tmpStr = alp[j].code;
+                tmpStr = alp[j].codeSF;
                 alp[j].symbol = alp[j+1].symbol;
-                alp[j].code = alp[j+1].code;
+                alp[j].codeSF = alp[j+1].codeSF;
                 alp[j].prob = alp[j+1].prob;
                 alp[j+1].symbol = tmpChar;
-                alp[j+1].code = tmpStr;
+                alp[j+1].codeSF = tmpStr;
                 alp[j+1].prob = tmpProb;
             }
         }
     }
-
 }
+
 /*!
  * \brief ShannonFan Method generating binary code words using Shannon-Fano algorithm.
  * \param alp SymbolProb struct object containing symbols, probabilities and code words. Hete this method fills property ".code" with binary code words.
  * \param size
  */
-void ShannonFan(SymbolProb alp[], int size){
+void ShannonFan(SymbolProb alp[], int size, double *avgWordLength){
 
     sortDesc(alp,size);  // sort the array of struct to desceding order.
-
     std::function<void(int, int, double)> divideProb = [&](int start, int end, double probSum) { // recursive function to determine dividing index at current array of symbols and assigning '0! or '1'
         if (start == end) {  // if the array is of one member the algorithm is at the end
             return;
         }
-
         double firstProb = alp[start].prob;  // defining the first divided half based on probability sum
         double secondProb = probSum - firstProb;  // defining the second divided half based on probability sum
         int divIndex = start; // initialization of dividing index at the beginning
@@ -138,18 +136,22 @@ void ShannonFan(SymbolProb alp[], int size){
         }
 
         for (int i = start; i <= divIndex; i++) {  // assign '1' to all members from the first half
-            alp[i].code += "1";
+            alp[i].codeSF += "1";
         }
         for (int i = divIndex + 1; i <= end; i++) {  // assign '0' ti all member from the second half
-            alp[i].code += "0";
+            alp[i].codeSF += "0";
         }
         divideProb(start, divIndex, firstProb);   // recursively call the function to its first half
         divideProb(divIndex+1,end, probSum - firstProb); // recursively call the function to its second half
-
     };
 
     divideProb(0, size -1, 1.0);  // first calling of the recursive function
     sortBack(alp, size);    // sorting the alphabet to its original state - by symbol characters
+
+    for (int i = 0; i< 10; i++){
+       *avgWordLength+= alp[i].codeSF.length() * alp[i].prob;
+    }
+
  };
 
 /*!
@@ -157,14 +159,12 @@ void ShannonFan(SymbolProb alp[], int size){
   * \param alp SymbolProb struct object containing symbols, probabilities and code words. Here this method fills property ".code" with binary code words.
   * \param size
   */
- void Huffman(SymbolProb alp[], int size){
-
+ void Huffman(SymbolProb alp[], int size, double *avgWordLength){
 
     vector<Node*> nodes;  // creating the initial list of nodes held in Vector
     for (int i = 0; i < size; i++) {
-        nodes.push_back(new Node(alp[i].prob, i));  // using vector method pushback to create nodes from the current array of probabilities, indexing
+        nodes.push_back(new Node(alp[i].prob, i));// using vector method pushback to create nodes from the current array of probabilities, indexing
     }
-
     while (nodes.size() > 1) {
         Node* min1 = nodes[0];   // initial min1 node
         int minIndex1 = 0;         // initial min1 index
@@ -203,8 +203,11 @@ void ShannonFan(SymbolProb alp[], int size){
 
     string code = "";  // initialization of code word
     generateCodeWords(nodes[0], code, alp, size);  // calling method that rercurdsively calls itself and generates either 0 or 1 to the code word
-
     delete nodes[0];  // free memory after nodes
+
+    for (int i = 0; i< 10; i++){
+        *avgWordLength+= alp[i].codeHuff.length() * alp[i].prob;
+    }
 
  }
 
@@ -220,7 +223,7 @@ void generateCodeWords(Node* node, string code, SymbolProb alp[], int size) {
     return;
     }
     if (node->index != -1) { // if the node index is not -1 (pointing to combined node), assign code word to the code words array of SymbolProb alp[]
-    alp[node->index].code = code;
+    alp[node->index].codeHuff = code;
     }
     generateCodeWords(node->left, code + "0", alp, size); // recursive calling with the left pointer and assigning '0'
     generateCodeWords(node->right, code + "1", alp, size); // recursive calling with the right pointer and assigning '1'
@@ -234,12 +237,13 @@ void generateCodeWords(Node* node, string code, SymbolProb alp[], int size) {
 void secureEven(SymbolProb alp[], int size){
 
     int count = 0; // counting number of '1's
+
     for (int i = 0; i < size; i++){ // iterating through all code words
-        for (int j = 0; j < alp[i].code.length(); j++){  // iterating through all code word characters
-            if(alp[i].code[j] == '1') count ++;
+        for (int j = 0; j < alp[i].codeHuff.length(); j++){  // iterating through all code word characters
+            if(alp[i].codeHuff[j] == '1') count ++;
         }
-        if (count % 2 == 0) alp[i].codeSecured = alp[i].code + '0'; // if the number of '1's is even, add '0'
-        else alp[i].codeSecured = alp[i].code + '1';   // if it is odd, add '1'
+        if (count % 2 == 0) alp[i].codeSecured = alp[i].codeHuff + '0'; // if the number of '1's is even, add '0'
+        else alp[i].codeSecured = alp[i].codeHuff + '1';   // if it is odd, add '1'
         count = 0; //resetting the counter
     }
 }

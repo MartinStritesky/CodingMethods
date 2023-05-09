@@ -2,7 +2,7 @@
 #define WIDGET_H
 
 #include "qgraphicsscene.h"
-#include "main.h"
+
 
 #include <QWidget>
 #include <QtCore>
@@ -25,9 +25,12 @@ public:
     //!  Widget class destructor.
     ~Widget();
     //! A method used to draw binary tree inside QGraphicsScene with QGraphicsItemLines.
-    void drawBinaryTree(SymbolProb alp[], int size, int scene);
+    void drawBinaryTree(std::string[], int size, int sc);
     //! A method used to transfer all alphabet information to QWidget panel.
-    void addAlphabet(SymbolProb alp[],SymbolProb alp2[], int size,  double entrophy, double avgWordLength, double avgWordLengthHuff, double avgInfoQty, double infoQty[]);
+    void addAlphabet(SymbolProb alp[],int size,  double *entrophy, double *avgWordLengthSF, double *avgWordLengthHuff, double *avgInfoQty);
+
+private slots:
+    void on_pushButton_clicked();
 
 private:
     Ui::Widget *ui;
