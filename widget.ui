@@ -694,22 +694,6 @@ li.checked::marker { content: &quot;\2612&quot;; }
     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;Huffman&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="pushButton">
-   <property name="geometry">
-    <rect>
-     <x>260</x>
-     <y>440</y>
-     <width>89</width>
-     <height>25</height>
-    </rect>
-   </property>
-   <property name="autoFillBackground">
-    <bool>true</bool>
-   </property>
-   <property name="text">
-    <string>PushButton</string>
-   </property>
-  </widget>
   <zorder>graphicsView_2</zorder>
   <zorder>tableWidget</zorder>
   <zorder>graphicsView</zorder>
@@ -724,7 +708,6 @@ li.checked::marker { content: &quot;\2612&quot;; }
   <zorder>label_2</zorder>
   <zorder>label_3</zorder>
   <zorder>textBrowser</zorder>
-  <zorder>pushButton</zorder>
  </widget>
  <resources/>
  <connections/>

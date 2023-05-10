@@ -2,7 +2,6 @@
 #include "ui_widget.h"
 #include "main.h"
 
-
 #include <iostream>
 #include <QGraphicsRectItem>
 
@@ -61,9 +60,6 @@ void Widget::addAlphabet(SymbolProb alp[],int size, double *entrophy, double *av
 
         drawBinaryTree(wordSF, 10,1);
         drawBinaryTree(wordHuff, 10,2);
-
-        update();
-        repaint();
     }
 }
 
@@ -113,7 +109,7 @@ void Widget::drawBinaryTree(std::string word[], int size, int sc){
                     QGraphicsTextItem* text = new QGraphicsTextItem(QString::fromStdString("(" + word[i] + ")"));  // when on the last level for this branch, add text with code word
                     text->setPos(x1-30+3*j,y1-25);
                     if (sc == 1)scene->addItem(text);
-                    else if (sc == 2)scene2->addItem(text);
+                    else if (sc == 2)scene2->addItem(text);  // selector between scenes (ShannonFano vs Huffman)
                 }
             }
 
@@ -133,24 +129,22 @@ void Widget::drawBinaryTree(std::string word[], int size, int sc){
         if (sc == 1) scene->addItem(lines[i]);
         else if (sc == 2) scene2->addItem(lines[i]); // selector between scenes (ShannonFano vs Huffman)
     }
-    update();
-    update();
-    repaint();
+
 }
 
-void Widget::on_pushButton_clicked()
-{
-    Widget w;
-    double newProb[10];
-    for (int i = 0; i < 10; i++){
-        newProb[i] = ui->tableWidget->item(i, 1)->text().toDouble();
-    }
-    ui->label->setText("BLA");
-    changeProb(newProb, &w);
+//void Widget::on_pushButton_clicked()
+//{
+//    Widget w;
+//    double newProb[10];
+//    for (int i = 0; i < 10; i++){
+//        newProb[i] = ui->tableWidget->item(i, 1)->text().toDouble();
+//    }
+//    ui->label->setText("BLA");
+//    changeProb(newProb, &w);
 
-    update();
-    repaint();
-}
+//    update();
+//    repaint();
+//}
 
 
 

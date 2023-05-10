@@ -30,7 +30,7 @@ void setUpAlphabet(SymbolProb alp[], int size, double *avgInfoQty){
 
     if (round(10 * soucetProb) != 10.0){
         cout << "Probability sum is not 100%! It is " << (100*soucetProb);
-        return;  // exits the programme if sum of probabilities is not 100%.
+        return;  // exits the program if sum of probabilities is not 100%.
     }
 }
 
@@ -128,7 +128,7 @@ void ShannonFan(SymbolProb alp[], int size, double *avgWordLength){
                 secondProb = probSum - firstProb;  // updating the probability sum of second half
                 double diff = std::abs(firstProb-secondProb);  // getting the current differente between first and second half
 
-                if (diff < originalDiff){  // in case the current difference is smaller that the defautl one, update dividing index to current iteration index
+                if (diff < originalDiff){  // in case the current difference is smaller that the default one, update dividing index to current iteration index
                     divIndex = i;
                     originalDiff = diff; // update the default difference
                     break;
@@ -138,7 +138,7 @@ void ShannonFan(SymbolProb alp[], int size, double *avgWordLength){
         for (int i = start; i <= divIndex; i++) {  // assign '1' to all members from the first half
             alp[i].codeSF += "1";
         }
-        for (int i = divIndex + 1; i <= end; i++) {  // assign '0' ti all member from the second half
+        for (int i = divIndex + 1; i <= end; i++) {  // assign '0' to all member from the second half
             alp[i].codeSF += "0";
         }
         divideProb(start, divIndex, firstProb);   // recursively call the function to its first half
@@ -149,7 +149,7 @@ void ShannonFan(SymbolProb alp[], int size, double *avgWordLength){
     sortBack(alp, size);    // sorting the alphabet to its original state - by symbol characters
 
     for (int i = 0; i< 10; i++){
-       *avgWordLength+= alp[i].codeSF.length() * alp[i].prob;
+       *avgWordLength+= alp[i].codeSF.length() * alp[i].prob;  // Calculating avergae code word length
     }
 
  };
@@ -206,7 +206,7 @@ void ShannonFan(SymbolProb alp[], int size, double *avgWordLength){
     delete nodes[0];  // free memory after nodes
 
     for (int i = 0; i< 10; i++){
-        *avgWordLength+= alp[i].codeHuff.length() * alp[i].prob;
+        *avgWordLength+= alp[i].codeHuff.length() * alp[i].prob;  // Calculating avergae code word length
     }
 
  }

@@ -30,7 +30,7 @@ public:
     void addAlphabet(SymbolProb alp[],int size,  double *entrophy, double *avgWordLengthSF, double *avgWordLengthHuff, double *avgInfoQty);
 
 private slots:
-    void on_pushButton_clicked();
+ //   void on_pushButton_clicked();
 
 private:
     Ui::Widget *ui;
