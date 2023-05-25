@@ -4,6 +4,7 @@
 
 #include <iostream>
 #include <QGraphicsRectItem>
+#include <array>
 
 
 Widget::Widget(QWidget *parent)
@@ -18,6 +19,8 @@ Widget::Widget(QWidget *parent)
     ui->graphicsView_2->setScene(scene2);  // assigning the scene2 into graphicsView2
     ui->graphicsView->setRenderHints(QPainter::Antialiasing); // turning antialiasing On
     ui->graphicsView_2->setRenderHints(QPainter::Antialiasing); // turning antialiasing On
+
+
 }
 
 Widget::~Widget()
@@ -147,5 +150,17 @@ void Widget::drawBinaryTree(std::string word[], int size, int sc){
 //}
 
 
+void Widget::on_pushButton_clicked()
+{
+        bClicked = 1;
+}
+
+void Widget::getAlp(SymbolProb alp[]){
+
+        for (int i = 0; i < 10; i++){
+        alp[i].prob= ui->tableWidget->item(i, 1)->text().toDouble();
+    }
+
+}
 
 

@@ -3,24 +3,29 @@
 #include <iostream>
 #include <array>
 #include <stdlib.h>
+#include <QPushButton>
+#include <QEventLoop>
 
 #include "main.h"
 #include "widget.h"
 #include "codingMethods.h"
 
 using namespace std;
+
 SymbolProb alp[10] = {
-    {'A', 0.10},
-    {'B', 0.08},
-    {'C', 0.06},
-    {'D', 0.03},
-    {'E', 0.15},
-    {'F', 0.12},
-    {'G', 0.04},
-    {'H', 0.17},
-    {'I', 0.07},
-    {'J', 0.18}
+    {'A'},
+    {'B'},
+    {'C'},
+    {'D'},
+    {'E'},
+    {'F'},
+    {'G'},
+    {'H'},
+    {'I'},
+    {'J'}
 };
+
+int bClicked = 0;
 
 double avgWordLengthSF = 0;  // Average length of binary code word from Shannon Fano method.
 double avgWordLengthHuff = 0; // Average length of binary code word from Huffman method.
@@ -31,10 +36,19 @@ int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);   // Initialization of the application.
     Widget w ; // Initialization of new QWidget object
+    w.show();
+
+    while(bClicked==0){
+        a.processEvents();
+    }
+
+    w.getAlp(alp);
 
     encode(alp, 10, &avgInfoQty, &avgWordLengthSF, &avgWordLengthHuff, &entrophy); // getting average info quantity and code words
     w.addAlphabet(alp,10, &entrophy, &avgWordLengthSF, &avgWordLengthHuff, &avgInfoQty);  // sending all information to be displayed in QWidget
 
+    w.repaint();
+    w.update();
     w.show();   // showing the widget
 
     return a.exec();
@@ -61,18 +75,7 @@ void encode(SymbolProb alp[], int size, double *avgInfoQty, double *avgWordLengt
 
 }
 
-//void changeProb(double newProb[], Widget *w){
+//void getProb(SymbolProb alp[], int size){
 
-//    for (int i = 0; i < 10; i++){
-//        alp[i].prob = newProb[i];
-//        cout << alp[i].prob<< endl;
-//    }
-
-//    encode(alp, 10, &avgInfoQty, &avgWordLengthSF, &avgWordLengthHuff, &entrophy);
-
-//    w->addAlphabet(alp,10, &entrophy, &avgWordLengthSF, &avgWordLengthHuff, &avgInfoQty);
-//    w->repaint();
-//    w->update();
-//    w->show();
 
 //}

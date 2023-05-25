@@ -32,7 +32,7 @@
    <property name="geometry">
     <rect>
      <x>100</x>
-     <y>388</y>
+     <y>420</y>
      <width>231</width>
      <height>16</height>
     </rect>
@@ -48,7 +48,7 @@
    <property name="geometry">
     <rect>
      <x>101</x>
-     <y>330</y>
+     <y>362</y>
      <width>231</width>
      <height>17</height>
     </rect>
@@ -64,7 +64,7 @@
    <property name="geometry">
     <rect>
      <x>101</x>
-     <y>359</y>
+     <y>391</y>
      <width>231</width>
      <height>17</height>
     </rect>
@@ -80,7 +80,7 @@
    <property name="geometry">
     <rect>
      <x>349</x>
-     <y>388</y>
+     <y>420</y>
      <width>161</width>
      <height>20</height>
     </rect>
@@ -101,7 +101,7 @@
    <property name="geometry">
     <rect>
      <x>340</x>
-     <y>333</y>
+     <y>365</y>
      <width>81</width>
      <height>17</height>
     </rect>
@@ -122,7 +122,7 @@
    <property name="geometry">
     <rect>
      <x>340</x>
-     <y>361</y>
+     <y>393</y>
      <width>81</width>
      <height>17</height>
     </rect>
@@ -145,7 +145,7 @@
      <x>0</x>
      <y>0</y>
      <width>631</width>
-     <height>421</height>
+     <height>471</height>
     </rect>
    </property>
    <property name="sizeAdjustPolicy">
@@ -574,7 +574,7 @@
    <property name="geometry">
     <rect>
      <x>430</x>
-     <y>332</y>
+     <y>364</y>
      <width>91</width>
      <height>17</height>
     </rect>
@@ -598,7 +598,7 @@
    <property name="geometry">
     <rect>
      <x>430</x>
-     <y>360</y>
+     <y>392</y>
      <width>91</width>
      <height>17</height>
     </rect>
@@ -652,10 +652,10 @@ p, li { white-space: pre-wrap; }
 hr { height: 1px; border-width: 0; }
 li.unchecked::marker { content: &quot;\2610&quot;; }
 li.checked::marker { content: &quot;\2612&quot;; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Ubuntu'; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:700;&quot;&gt;AK2TP - Martin Stritesky&lt;/span&gt;&lt;/p&gt;
-&lt;p align=&quot;center&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:14pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;This is a demo encoding 10 symbol alphabet into code using Shannon-Fano and Huffman´s methods.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Segoe UI'; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Ubuntu'; font-size:12pt; font-weight:700;&quot;&gt;AK2TP - Martin Stritesky&lt;/span&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Ubuntu'; font-size:14pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Ubuntu'; font-size:11pt;&quot;&gt;This is a demo encoding 10 symbol alphabet into code using Shannon-Fano and Huffman´s methods.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
    </property>
   </widget>
   <widget class="QLabel" name="label_2">
@@ -694,6 +694,19 @@ li.checked::marker { content: &quot;\2612&quot;; }
     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;Huffman&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
    </property>
   </widget>
+  <widget class="QPushButton" name="pushButton">
+   <property name="geometry">
+    <rect>
+     <x>140</x>
+     <y>330</y>
+     <width>75</width>
+     <height>24</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Generuj</string>
+   </property>
+  </widget>
   <zorder>graphicsView_2</zorder>
   <zorder>tableWidget</zorder>
   <zorder>graphicsView</zorder>
@@ -708,6 +721,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
   <zorder>label_2</zorder>
   <zorder>label_3</zorder>
   <zorder>textBrowser</zorder>
+  <zorder>pushButton</zorder>
  </widget>
  <resources/>
  <connections/>

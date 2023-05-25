@@ -19,6 +19,8 @@ struct SymbolProb {
     std::string codeSecured;    // The Huffman binary code secured by Even Parity.
 };
 
+extern int bClicked;
+
 class Widget;
 
 //void changeProb(double newProb[], Widget  *w);
